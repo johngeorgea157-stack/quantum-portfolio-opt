@@ -1,0 +1,24 @@
+# Environments
+.env
+.venv
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter
+.ipynb_checkpoints
+
+# Data
+data/raw/*.csv
+data/cached/*.npy
+data/cached/*.csv
+
+# OS
+.DS_Store
+
+apikey.json
+🧠 Hybrid Quantum.docx
