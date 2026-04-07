@@ -47,10 +47,10 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 ### ⚙️ Phase 1 — Foundations + Setup `Days 1–3`
 - [x] Qiskit environment + IBM Quantum account setup
 - [x] Basic circuit exercises (Hadamard, measurement, Sampler)
-- [ ] Pull 5–8 Bank Nifty stocks via `yfinance`
-- [ ] Compute daily returns and covariance matrix
-- [ ] Visualize correlation heatmap
-- [ ] Mean-variance optimization + efficient frontier (classical baseline)
+- [x] Pull 5–8 Bank Nifty stocks via `yfinance`
+- [x] Compute daily returns and covariance matrix
+- [x] Visualize correlation heatmap
+- [x] Mean-variance optimization + efficient frontier (classical baseline)
 
 ### 🧮 Phase 2 — QUBO Formulation `Days 4–6`
 - [ ] Convert portfolio problem to QUBO mathematically
