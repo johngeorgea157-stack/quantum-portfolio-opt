@@ -53,7 +53,7 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 - [x] Mean-variance optimization + efficient frontier (classical baseline)
 
 ### 🧮 Phase 2 — QUBO Formulation `Days 4–6`
-- [ ] Convert portfolio problem to QUBO mathematically
+- [x] Convert portfolio problem to QUBO mathematically
 - [ ] Build Q matrix in Python and validate with random bitstrings
 - [ ] Solve QUBO via **brute force** (ground truth benchmark)
 
