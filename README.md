@@ -58,8 +58,8 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 - [x] Solve QUBO via **brute force** (ground truth benchmark)
 
 ### ⚛️ Phase 3 — QAOA Implementation `Days 7–10`
-- [ ] Implement cost + mixer Hamiltonians
-- [ ] Build QAOA circuit in Qiskit (p-layer parametrized)
+- [x] Implement cost + mixer Hamiltonians
+- [x] Build QAOA circuit in Qiskit (p-layer parametrized)
 - [ ] Run on **Aer simulator** — extract bitstrings and probabilities
 - [ ] Run on **real IBM Quantum hardware** — compare noise distortion
 
