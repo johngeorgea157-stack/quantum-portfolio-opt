@@ -60,8 +60,8 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 ### ⚛️ Phase 3 — QAOA Implementation `Days 7–10`
 - [x] Implement cost + mixer Hamiltonians
 - [x] Build QAOA circuit in Qiskit (p-layer parametrized)
-- [ ] Run on **Aer simulator** — extract bitstrings and probabilities
-- [ ] Run on **real IBM Quantum hardware** — compare noise distortion
+- [x] Run on **Aer simulator** — extract bitstrings and probabilities
+- [x] Run on **real IBM Quantum hardware** — compare noise distortion
 
 ### 🧪 Phase 4 — Classical Benchmarking `Days 11–12`
 - [ ] Implement greedy selection algorithm
