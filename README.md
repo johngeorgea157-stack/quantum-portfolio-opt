@@ -64,9 +64,9 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 - [x] Run on **real IBM Quantum hardware** — compare noise distortion
 
 ### 🧪 Phase 4 — Classical Benchmarking `Days 11–12`
-- [ ] Implement greedy selection algorithm
-- [ ] Implement simulated annealing
-- [ ] Compare all methods: return, risk, execution time
+- [x] Implement greedy selection algorithm
+- [x] Implement simulated annealing
+- [x] Compare all methods: return, risk, execution time
 
 ### 📊 Phase 5 — Analysis + Insights `Days 13–14`
 - [ ] Interpret where QAOA matched / failed vs optimal
