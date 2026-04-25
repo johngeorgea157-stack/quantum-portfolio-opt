@@ -172,3 +172,48 @@ if __name__ == "__main__":
         print(f"Volatility range: {min(p['volatility'] for p in portfolios):.4f} to {max(p['volatility'] for p in portfolios):.4f}")
 
     print("=" * 70)
+import time
+
+def greedy_qubo_search(Q, k):
+    """
+    Greedy heuristic to find an approximate solution for a QUBO.
+    Iteratively adds the single asset that minimizes the objective
+    until k assets are selected.
+    
+    Args:
+        Q: QUBO matrix (numpy array)
+        k: Int, number of stocks to pick
+        
+    Returns:
+        best_x: numpy array (binary vector)
+        best_obj: float
+        exec_time: float
+    """
+    start_time = time.time()
+    n = len(Q)
+    x = np.zeros(n, dtype=int)
+    
+    # We want exactly k stocks
+    for _ in range(k):
+        best_gain = float("inf")
+        best_idx = -1
+        
+        # Test flipping each 0 to 1
+        for i in range(n):
+            if x[i] == 0:
+                x_test = x.copy()
+                x_test[i] = 1
+                obj = float(x_test @ Q @ x_test)
+                
+                if obj < best_gain:
+                    best_gain = obj
+                    best_idx = i
+                    
+        # Permanently flip the best one
+        if best_idx != -1:
+            x[best_idx] = 1
+            
+    final_obj = float(x @ Q @ x)
+    exec_time = time.time() - start_time
+    
+    return x, final_obj, exec_time
