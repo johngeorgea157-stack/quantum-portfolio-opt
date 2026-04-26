@@ -69,14 +69,14 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 - [x] Compare all methods: return, risk, execution time
 
 ### 📊 Phase 5 — Analysis + Insights `Days 13–14`
-- [ ] Interpret where QAOA matched / failed vs optimal
-- [ ] Plot risk–return frontier, bitstring distributions, comparison table
-- [ ] Quantify noise impact: simulator vs real hardware delta
+- [x] Interpret where QAOA matched / failed vs optimal
+- [x] Plot risk–return frontier, bitstring distributions, comparison table
+- [x] Quantify noise impact: simulator vs real hardware delta
 
 ### 🚀 Phase 6 — Portfolio + Showcase `Day 15`
 - [ ] Final GitHub repo polish (this README, architecture diagram)
 - [ ] Export clean figures to `/results/figures/`
-- [ ] Write LinkedIn article: *"Why Quantum is NOT yet better than classical (but will be)"*
+
 
 ---
 
