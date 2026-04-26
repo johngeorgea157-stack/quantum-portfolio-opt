@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Quantum Portfolio Optimization — Complete Learning Guide</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Quantum Portfolio Optimization — Complete Learning Guide</h1>
+</header>
+<h1 id="quantum-portfolio-optimization-complete-learning-guide">Quantum Portfolio Optimization — Complete Learning Guide</h1>
+<p><strong>Author</strong>: John George Alexander<br />
+<strong>Project</strong>: Hybrid Quantum-Classical Portfolio Optimization<br />
+<strong>Repository</strong>: <a href="https://github.com/johngeorgea157-stack/quantum-portfolio-opt">github.com/johngeorgea157-stack/quantum-portfolio-opt</a></p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#1-classical-portfolio-theory">Classical Portfolio Theory</a></li>
+<li><a href="#2-qubo--the-mathematical-bridge">QUBO — The Mathematical Bridge</a></li>
+<li><a href="#3-quantum-computing-models">Quantum Computing Models</a></li>
+<li><a href="#4-hamiltonians--the-language-of-quantum-physics">Hamiltonians — The Language of Quantum Physics</a></li>
+<li><a href="#5-qaoa--the-algorithm">QAOA — The Algorithm</a></li>
+<li><a href="#6-how-qubo--qaoa-are-used-in-our-code">How QUBO &amp; QAOA Are Used in Our Code</a></li>
+<li><a href="#7-repository-pipeline-overview">Repository Pipeline Overview</a></li>
+<li><a href="#8-why-quantum-is-not-yet-better-than-classical-but-will-be">Why Quantum is NOT Yet Better Than Classical (But Will Be)</a></li>
+<li><a href="#9-limitations--future-improvements">Limitations &amp; Future Improvements</a></li>
+<li><a href="#10-key-formulas-reference">Key Formulas Reference</a></li>
+</ol>
+<hr />
+<h2 id="classical-portfolio-theory">1. Classical Portfolio Theory</h2>
+<h3 id="the-markowitz-mean-variance-model-1952">The Markowitz Mean-Variance Model (1952)</h3>
+<p>Harry Markowitz showed that a rational investor should not just pick high-return stocks — they should consider the <em>covariance</em> between assets. Two assets that are individually volatile can together produce a stable portfolio if their movements cancel out.</p>
+<p><strong>The Optimization Problem:</strong></p>
+<p>Given <code>n</code> assets, find weights <code>w</code> that:</p>
+<p><span class="math display">\[\min_w \quad \frac{1}{2} \mathbf{w}^T \Sigma \mathbf{w}\]</span></p>
+<p>Subject to: - <span class="math inline">\(\mathbf{w}^T \boldsymbol{\mu} = \mu_{\text{target}}\)</span> (target return)<br />
+- <span class="math inline">\(\mathbf{w}^T \mathbf{1} = 1\)</span> (weights sum to 1)<br />
+- <span class="math inline">\(w_i \geq 0\)</span> (no short selling)</p>
+<p>Where: - <span class="math inline">\(\boldsymbol{\mu}\)</span> = vector of expected returns (annualized) - <span class="math inline">\(\Sigma\)</span> = covariance matrix (annualized) - <span class="math inline">\(\mathbf{w}\)</span> = portfolio weight vector</p>
+<h3 id="the-efficient-frontier">The Efficient Frontier</h3>
+<p>By solving the above for every possible target return, we trace out the <strong>Efficient Frontier</strong> — the curve of optimal portfolios where you cannot improve return without increasing risk, or reduce risk without sacrificing return.</p>
+<blockquote>
+<p><strong>Key Insight for Quantum</strong>: Classical Markowitz uses <em>continuous</em> weights (<span class="math inline">\(w_i \in [0, 1]\)</span>). Quantum optimization uses <em>binary</em> selection (<span class="math inline">\(x_i \in \{0, 1\}\)</span>). This creates a fundamental “discretization gap” — the quantum formulation can only reach discrete points, not the full continuous frontier.</p>
+</blockquote>
+<hr />
+<h2 id="qubo-the-mathematical-bridge">2. QUBO — The Mathematical Bridge</h2>
+<h3 id="what-is-qubo">What is QUBO?</h3>
+<p><strong>QUBO</strong> = Quadratic Unconstrained Binary Optimization.</p>
+<p>It is a mathematical framework that rewrites any optimization problem so that: 1. All variables are <strong>binary</strong> (<span class="math inline">\(x_i \in \{0, 1\}\)</span>) 2. Constraints are absorbed into the objective as <strong>penalty terms</strong> 3. The objective is at most <strong>quadratic</strong> (<span class="math inline">\(x_i \cdot x_j\)</span> terms)</p>
+<h3 id="standard-form">Standard Form</h3>
+<p><span class="math display">\[\min_{\mathbf{x}} \quad f(\mathbf{x}) = \mathbf{x}^T Q \mathbf{x} = \sum_i \sum_j Q_{ij} \cdot x_i \cdot x_j\]</span></p>
+<p>Where <span class="math inline">\(Q\)</span> is an <span class="math inline">\(n \times n\)</span> matrix that encodes the entire problem.</p>
+<h3 id="our-portfolio-qubo">Our Portfolio QUBO</h3>
+<p>We have <span class="math inline">\(n\)</span> stocks. <span class="math inline">\(x_i = 1\)</span> means “buy stock <span class="math inline">\(i\)</span>”, <span class="math inline">\(x_i = 0\)</span> means “skip it”.</p>
+<p><span class="math display">\[f(\mathbf{x}) = \underbrace{-\sum_i \mu_i x_i}_{\text{Return (negated)}} + \underbrace{q \sum_i \sum_j \sigma_{ij} x_i x_j}_{\text{Risk}} + \underbrace{\lambda(\sum_i x_i - k)^2}_{\text{Cardinality Penalty}}\]</span></p>
+<h3 id="building-the-q-matrix">Building the Q Matrix</h3>
+<p>After expanding the penalty term <span class="math inline">\((\sum_i x_i - k)^2\)</span> and using the identity <span class="math inline">\(x_i^2 = x_i\)</span> for binary variables:</p>
+<p><strong>Diagonal entries:</strong> <span class="math display">\[Q_{ii} = -\mu_i + q \cdot \sigma_{ii} + \lambda(1 - 2k)\]</span></p>
+<p><strong>Off-diagonal entries (<span class="math inline">\(i \neq j\)</span>):</strong> <span class="math display">\[Q_{ij} = q \cdot \sigma_{ij} + \lambda\]</span></p>
+<p>Where: - <span class="math inline">\(\mu_i\)</span> = expected return of stock <span class="math inline">\(i\)</span> - <span class="math inline">\(\sigma_{ij}\)</span> = covariance between stocks <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> - <span class="math inline">\(q\)</span> = risk aversion weight (default 1.0) - <span class="math inline">\(\lambda\)</span> = penalty strength (typically <span class="math inline">\(\approx 10 \times \max(|\mu|)\)</span>) - <span class="math inline">\(k\)</span> = number of stocks to select</p>
+<h3 id="reading-qubo-values">Reading QUBO Values</h3>
+<p>The QUBO value <span class="math inline">\(f(\mathbf{x})\)</span> is the “energy” of a portfolio: - <strong>More negative</strong> = better (high return, low risk, valid cardinality) - <strong>Less negative or positive</strong> = worse (low return, high risk, or violates <span class="math inline">\(k\)</span> constraint)</p>
+<hr />
+<h2 id="quantum-computing-models">3. Quantum Computing Models</h2>
+<h3 id="circuit-gate-based-model">3.1 Circuit (Gate-Based) Model</h3>
+<p><strong>Hardware</strong>: IBM Quantum, Google Sycamore, Quantinuum</p>
+<p>Computation proceeds through <strong>discrete logic gates</strong> applied to qubits in sequence: - <strong>Hadamard (H)</strong>: Creates superposition (<span class="math inline">\(|0\rangle \to \frac{|0\rangle + |1\rangle}{\sqrt{2}}\)</span>) - <strong>CNOT</strong>: Entangles two qubits - <strong>Rz, Rx</strong>: Rotations (parameterized gates used in QAOA)</p>
+<p><strong>Properties:</strong> - Mathematically <strong>universal</strong> — can simulate any quantum algorithm - Supports Shor’s (cryptography), Grover’s (search), VQE (chemistry), QAOA (optimization) - Current limitation: high gate noise, small qubit counts (100–1000 qubits)</p>
+<h3 id="adiabatic-quantum-computation-aqc">3.2 Adiabatic Quantum Computation (AQC)</h3>
+<p><strong>Hardware</strong>: D-Wave Systems</p>
+<p>Instead of logic gates, AQC uses a continuous physical process: 1. <strong>Start</strong> in a simple, known quantum ground state (high-energy superposition) 2. <strong>Slowly</strong> evolve the physical Hamiltonian toward the problem Hamiltonian 3. <strong>End</strong> in the ground state of the problem — which IS the optimal solution</p>
+<p><strong>The Adiabatic Theorem</strong>: If the evolution is slow enough, the system stays in the ground state throughout, guaranteeing the optimal answer.</p>
+<p><strong>Properties:</strong> - <strong>Not universal</strong> — specialized for optimization (QUBO/Ising) problems only - Cannot run Shor’s or Grover’s algorithm - Scales to thousands of qubits (D-Wave Advantage: 5000+ qubits) - Natively interprets QUBO as a physical magnetic landscape</p>
+<h3 id="the-key-difference">3.3 The Key Difference</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Circuit Model</th>
+<th style="text-align: left;">Adiabatic (AQC)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Execution</td>
+<td style="text-align: left;">Discrete digital gates</td>
+<td style="text-align: left;">Continuous analog physics</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Universality</td>
+<td style="text-align: left;">Universal (any algorithm)</td>
+<td style="text-align: left;">Optimization only</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">QUBO solving</td>
+<td style="text-align: left;">Via QAOA algorithm</td>
+<td style="text-align: left;">Native (no algorithm needed)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Scale today</td>
+<td style="text-align: left;">~100–1000 qubits</td>
+<td style="text-align: left;">~5000+ qubits</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Noise profile</td>
+<td style="text-align: left;">Gate errors accumulate</td>
+<td style="text-align: left;">Analog noise, different character</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="hamiltonians-the-language-of-quantum-physics">4. Hamiltonians — The Language of Quantum Physics</h2>
+<h3 id="what-is-a-hamiltonian">What is a Hamiltonian?</h3>
+<p>A <strong>Hamiltonian</strong> is a matrix (operator) that encodes the total energy of a quantum system. In quantum computing, we use Hamiltonians to define: - What problem we are solving (Cost Hamiltonian) - How to explore the solution space (Mixer Hamiltonian)</p>
+<h3 id="cost-hamiltonian-h_c">Cost Hamiltonian (<span class="math inline">\(H_C\)</span>)</h3>
+<p>The Cost Hamiltonian encodes our QUBO problem directly into quantum mechanics. Each eigenstate (measurement outcome) of <span class="math inline">\(H_C\)</span> corresponds to a bitstring, and its eigenvalue is the QUBO energy of that bitstring.</p>
+<p><span class="math display">\[H_C = \sum_i h_i Z_i + \sum_{i&lt;j} J_{ij} Z_i Z_j + \text{offset}\]</span></p>
+<p>Where: - <span class="math inline">\(Z_i\)</span> is the Pauli-Z operator on qubit <span class="math inline">\(i\)</span> - <span class="math inline">\(h_i\)</span> and <span class="math inline">\(J_{ij}\)</span> are coefficients derived from the QUBO matrix <span class="math inline">\(Q\)</span> - The ground state (lowest eigenvalue) of <span class="math inline">\(H_C\)</span> = the optimal portfolio</p>
+<p><strong>QUBO → Ising Mapping</strong>: We convert each binary variable <span class="math inline">\(x_i \in \{0,1\}\)</span> to a spin variable <span class="math inline">\(z_i \in \{-1, +1\}\)</span> using <span class="math inline">\(x_i = \frac{1 - z_i}{2}\)</span>. This transforms the QUBO matrix into Pauli-Z strings that a quantum computer understands.</p>
+<h3 id="mixer-hamiltonian-h_m">Mixer Hamiltonian (<span class="math inline">\(H_M\)</span>)</h3>
+<p>The Mixer Hamiltonian drives transitions between different bitstrings. It ensures the algorithm explores the full solution space rather than getting stuck.</p>
+<p><span class="math display">\[H_M = \sum_i X_i\]</span></p>
+<p>Where <span class="math inline">\(X_i\)</span> is the Pauli-X operator (quantum NOT gate) on qubit <span class="math inline">\(i\)</span>. This operator flips <span class="math inline">\(|0\rangle \leftrightarrow |1\rangle\)</span>, mixing the probability amplitudes across all possible portfolios.</p>
+<h3 id="the-relationship">The Relationship</h3>
+<ul>
+<li><span class="math inline">\(H_C\)</span> defines <strong>what</strong> we want to find (the lowest energy portfolio)</li>
+<li><span class="math inline">\(H_M\)</span> defines <strong>how</strong> we search (by flipping qubits to explore new combinations)</li>
+<li>QAOA alternates between these two: “look at the cost” → “explore neighbors” → repeat</li>
+</ul>
+<hr />
+<h2 id="qaoa-the-algorithm">5. QAOA — The Algorithm</h2>
+<h3 id="quantum-approximate-optimization-algorithm">Quantum Approximate Optimization Algorithm</h3>
+<p>QAOA was invented by Farhi, Goldstone, and Gutmann (2014) to solve combinatorial optimization problems on gate-based quantum computers.</p>
+<h3 id="how-it-works-step-by-step">How It Works (Step by Step)</h3>
+<p><strong>Step 1</strong>: Start all qubits in uniform superposition: <span class="math display">\[|\psi_0\rangle = H^{\otimes n}|0\rangle^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum_{x \in \{0,1\}^n} |x\rangle\]</span></p>
+<p>Every portfolio has equal probability of being measured.</p>
+<p><strong>Step 2</strong>: Apply <span class="math inline">\(p\)</span> alternating layers of: <span class="math display">\[|\psi(\gamma, \beta)\rangle = \prod_{l=1}^{p} \left[ e^{-i\beta_l H_M} \cdot e^{-i\gamma_l H_C} \right] |\psi_0\rangle\]</span></p>
+<ul>
+<li><span class="math inline">\(e^{-i\gamma_l H_C}\)</span>: “Cost layer” — rotates phases proportional to QUBO energy. Good portfolios accumulate more constructive interference.</li>
+<li><span class="math inline">\(e^{-i\beta_l H_M}\)</span>: “Mixer layer” — allows amplitude to flow between bitstrings, enabling exploration.</li>
+</ul>
+<p><strong>Step 3</strong>: Measure the qubits. The bitstring with highest probability is the approximate optimal portfolio.</p>
+<p><strong>Step 4</strong>: Use a classical optimizer (COBYLA) to tune <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\beta\)</span> parameters to maximize the probability of measuring the optimal bitstring.</p>
+<h3 id="the-trotterization-connection">The Trotterization Connection</h3>
+<p>As <span class="math inline">\(p \to \infty\)</span>, QAOA mathematically converges to <strong>exact Adiabatic Quantum Computation</strong>. Each layer becomes an infinitesimal step in the continuous adiabatic evolution. This is called <strong>Trotterization</strong> — QAOA is a digitized (discretized) version of AQC.</p>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><strong><span class="math inline">\(p\)</span> (depth)</strong>: Number of alternating Cost/Mixer layers. Higher <span class="math inline">\(p\)</span> = better approximation but deeper circuit = more noise.</li>
+<li><strong><span class="math inline">\(\gamma_l\)</span></strong>: Cost layer angles (one per layer)</li>
+<li><strong><span class="math inline">\(\beta_l\)</span></strong>: Mixer layer angles (one per layer)</li>
+<li><strong>Total parameters</strong>: <span class="math inline">\(2p\)</span> (optimized by COBYLA)</li>
+</ul>
+<hr />
+<h2 id="how-qubo-qaoa-are-used-in-our-code">6. How QUBO &amp; QAOA Are Used in Our Code</h2>
+<h3 id="pipeline-flow">Pipeline Flow</h3>
+<pre><code>yfinance data → μ, Σ → build_Q_matrix() → qubo_to_ising() → QAOAAnsatz → COBYLA → Sampler → Results</code></pre>
+<h3 id="quboqubo_builder.py-build-the-q-matrix"><code>qubo/qubo_builder.py</code> — Build the Q Matrix</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_Q_matrix(returns, cov, penalty, k, risk_weight<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    Q[i][i] <span class="op">=</span> <span class="op">-</span>returns[i] <span class="op">+</span> risk_weight <span class="op">*</span> cov[i][i] <span class="op">+</span> penalty <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>k)  <span class="co"># diagonal</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    Q[i][j] <span class="op">=</span> risk_weight <span class="op">*</span> cov[i][j] <span class="op">+</span> penalty                            <span class="co"># off-diagonal</span></span></code></pre></div>
+<p>Takes the financial data (μ, Σ) and encodes it into a single matrix <span class="math inline">\(Q\)</span>. This matrix IS the portfolio problem.</p>
+<h3 id="qaoaqaoa_circuit.py-qubo-quantum-circuit"><code>qaoa/qaoa_circuit.py</code> — QUBO → Quantum Circuit</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> qubo_to_ising(Q):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Converts Q matrix → SparsePauliOp (Pauli Z strings)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Uses: x_i = (1 - Z_i) / 2</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_qaoa_circuit(Q, p<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    hamiltonian, offset <span class="op">=</span> qubo_to_ising(Q)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    circuit <span class="op">=</span> QAOAAnsatz(cost_operator<span class="op">=</span>hamiltonian, reps<span class="op">=</span>p)</span></code></pre></div>
+<p>Maps the mathematical Q matrix into quantum physics (Pauli operators), then builds the parameterized QAOA circuit using Qiskit’s <code>QAOAAnsatz</code>.</p>
+<h3 id="qaoarun_simulator.py-the-optimization-loop"><code>qaoa/run_simulator.py</code> — The Optimization Loop</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>estimator <span class="op">=</span> StatevectorEstimator()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_expectation(params):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> estimator.run([(circuit, hamiltonian, params)]).result()[<span class="dv">0</span>].data.evs</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> minimize(evaluate_expectation, initial_point, method<span class="op">=</span><span class="st">&#39;COBYLA&#39;</span>)</span></code></pre></div>
+<p>The classical-quantum hybrid loop: COBYLA proposes <span class="math inline">\(\gamma, \beta\)</span> → Qiskit evaluates the quantum expectation value → COBYLA refines → repeat until convergence.</p>
+<h3 id="qaoarun_hardware.py-real-ibm-quantum-execution"><code>qaoa/run_hardware.py</code> — Real IBM Quantum Execution</h3>
+<p>Runs the optimization loop locally on a simulator (fast), then submits only the final optimized circuit to IBM hardware (one queue wait instead of thousands).</p>
+<hr />
+<h2 id="repository-pipeline-overview">7. Repository Pipeline Overview</h2>
+<pre><code>quantum-portfolio-opt/
+│
+├── data/                          ← Phase 1: Financial Data
+│   ├── fetch_data.py              # Downloads stock prices via yfinance
+│   ├── preprocess.py              # Computes μ (returns) and Σ (covariance)
+│   └── eda.ipynb                  # Exploratory data analysis notebook
+│
+├── qubo/                          ← Phase 2: Mathematical Formulation
+│   ├── qubo_builder.py            # Builds the Q matrix from μ, Σ
+│   ├── qubo_demo.ipynb            # Interactive QUBO exploration
+│   └── brute_force.py             # Exhaustive search (ground truth)
+│
+├── qaoa/                          ← Phase 3: Quantum Algorithm
+│   ├── qaoa_circuit.py            # QUBO→Ising + QAOAAnsatz builder
+│   ├── run_simulator.py           # Full pipeline on local simulator
+│   ├── run_hardware.py            # Submit to real IBM Quantum hardware
+│   └── qaoa_main.ipynb            # End-to-end QAOA notebook
+│
+├── classical/                     ← Phase 4: Classical Benchmarks
+│   ├── greedy.py                  # Greedy portfolio selection
+│   ├── sim_annealing.py           # Simulated annealing on QUBO
+│   └── classical_bench.ipynb      # Head-to-head comparison
+│
+└── results/                       ← Phase 5: Analysis
+    ├── analysis.ipynb             # Visualizations + interpretation
+    ├── metrics.csv                # Comparison table (auto-generated)
+    └── figures/                   # Exported plots</code></pre>
+<h3 id="the-data-flow">The Data Flow</h3>
+<ol type="1">
+<li><strong>yfinance</strong> → raw stock prices (1 year of daily close prices)</li>
+<li><strong>preprocess.py</strong> → daily returns → annualized μ (returns) and Σ (covariance)</li>
+<li><strong>qubo_builder.py</strong> → Q matrix encoding return + risk + cardinality penalty</li>
+<li><strong>qaoa_circuit.py</strong> → Q → Ising Hamiltonian → QAOA circuit (parameterized)</li>
+<li><strong>COBYLA optimizer</strong> → finds optimal γ, β angles</li>
+<li><strong>Sampler</strong> → measures circuit → probability distribution over bitstrings</li>
+<li><strong>analysis.ipynb</strong> → compares QAOA vs Brute Force vs Greedy vs SA</li>
+</ol>
+<hr />
+<h2 id="why-quantum-is-not-yet-better-than-classical-but-will-be">8. Why Quantum is NOT Yet Better Than Classical (But Will Be)</h2>
+<h3 id="the-honest-truth-today">The Honest Truth Today</h3>
+<p>At N = 6 stocks (our project scale): - <strong>Brute Force</strong> checks all 64 combinations in &lt; 0.001 seconds - <strong>Greedy</strong> finds the optimum in &lt; 0.0001 seconds - <strong>Simulated Annealing</strong> finds the optimum in &lt; 0.01 seconds - <strong>QAOA</strong> takes 5–30 seconds (COBYLA iterations + circuit simulation)</p>
+<p><strong>QAOA is 1000× slower and finds the same answer.</strong> There is zero quantum advantage.</p>
+<h3 id="why-it-will-change">Why It Will Change</h3>
+<p>The computational complexity tells the real story:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Time Complexity</th>
+<th style="text-align: left;">N=6</th>
+<th style="text-align: left;">N=50</th>
+<th style="text-align: left;">N=1000</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Brute Force</td>
+<td style="text-align: left;"><span class="math inline">\(O(2^N)\)</span></td>
+<td style="text-align: left;">64</td>
+<td style="text-align: left;"><span class="math inline">\(10^{15}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(10^{301}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Greedy</td>
+<td style="text-align: left;"><span class="math inline">\(O(N^2)\)</span></td>
+<td style="text-align: left;">36</td>
+<td style="text-align: left;">2,500</td>
+<td style="text-align: left;">1,000,000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SA</td>
+<td style="text-align: left;"><span class="math inline">\(O(\text{iterations})\)</span></td>
+<td style="text-align: left;">Fast</td>
+<td style="text-align: left;">Slow</td>
+<td style="text-align: left;">Very Slow</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">QAOA</td>
+<td style="text-align: left;"><span class="math inline">\(O(\text{poly}(N) \cdot p)\)</span></td>
+<td style="text-align: left;">Overkill</td>
+<td style="text-align: left;">Feasible</td>
+<td style="text-align: left;">Feasible*</td>
+</tr>
+</tbody>
+</table>
+<p>*Feasible with fault-tolerant quantum hardware (not yet available).</p>
+<p><strong>The crossover point</strong>: Around N = 30–50, brute force becomes impossible. Greedy and SA start failing to find the true optimum (getting trapped in local minima). QAOA’s polynomial scaling means it remains tractable — but only if hardware noise is low enough.</p>
+<h3 id="what-needs-to-happen">What Needs to Happen</h3>
+<ol type="1">
+<li><strong>Error Correction</strong>: Current NISQ devices have ~0.1% gate error rates. We need &lt; 0.001% for deep QAOA circuits.</li>
+<li><strong>More Qubits</strong>: 1000-stock portfolios need 1000 logical qubits (potentially 1 million physical qubits with error correction).</li>
+<li><strong>Faster Classical Optimizers</strong>: The COBYLA loop is a bottleneck. Better variational methods (ADAPT-QAOA, warm-starting) can reduce iterations.</li>
+</ol>
+<hr />
+<h2 id="limitations-future-improvements">9. Limitations &amp; Future Improvements</h2>
+<h3 id="current-limitations">Current Limitations</h3>
+<ol type="1">
+<li><strong>Scale</strong>: Only 3–6 stocks tested. Real portfolios have 50–3000 assets.</li>
+<li><strong>Binary Selection</strong>: Our QUBO only picks stocks (0 or 1). Real portfolios need continuous weights.</li>
+<li><strong>Static Data</strong>: Uses historical returns. Real optimization needs forward-looking estimates.</li>
+<li><strong>Noise</strong>: IBM hardware introduces 5–15% degradation in solution quality.</li>
+<li><strong>COBYLA Convergence</strong>: Classical optimizer sometimes gets stuck, especially with high <span class="math inline">\(p\)</span>.</li>
+<li><strong>No Transaction Costs</strong>: Real portfolios must account for brokerage, slippage, taxes.</li>
+</ol>
+<h3 id="future-improvements">Future Improvements</h3>
+<ol type="1">
+<li><strong>ADAPT-QAOA</strong>: Dynamically grows the circuit instead of using fixed <span class="math inline">\(p\)</span> layers.</li>
+<li><strong>Warm-Starting</strong>: Initialize QAOA parameters from a classical solution instead of random.</li>
+<li><strong>CVaR Objective</strong>: Replace expected value with Conditional Value-at-Risk for better tail-risk handling.</li>
+<li><strong>Continuous Weights</strong>: Use QAOA with multi-qubit encoding to represent fractional weights.</li>
+<li><strong>Error Mitigation</strong>: Apply Zero-Noise Extrapolation (ZNE) or Probabilistic Error Cancellation (PEC).</li>
+<li><strong>Larger Universe</strong>: Test with 20+ stocks to approach the classical-quantum crossover.</li>
+</ol>
+<hr />
+<h2 id="key-formulas-reference">10. Key Formulas Reference</h2>
+<h3 id="portfolio-theory">Portfolio Theory</h3>
+<ul>
+<li><strong>Expected Return</strong>: <span class="math inline">\(R_p = \mathbf{w}^T \boldsymbol{\mu}\)</span></li>
+<li><strong>Portfolio Variance</strong>: <span class="math inline">\(\sigma_p^2 = \mathbf{w}^T \Sigma \mathbf{w}\)</span></li>
+<li><strong>Sharpe Ratio</strong>: <span class="math inline">\(S = \frac{R_p - R_f}{\sigma_p}\)</span></li>
+</ul>
+<h3 id="qubo">QUBO</h3>
+<ul>
+<li><strong>Objective</strong>: <span class="math inline">\(f(\mathbf{x}) = \mathbf{x}^T Q \mathbf{x}\)</span></li>
+<li><strong>Q diagonal</strong>: <span class="math inline">\(Q_{ii} = -\mu_i + q\sigma_{ii} + \lambda(1-2k)\)</span></li>
+<li><strong>Q off-diagonal</strong>: <span class="math inline">\(Q_{ij} = q\sigma_{ij} + \lambda\)</span></li>
+</ul>
+<h3 id="ising-hamiltonian">Ising / Hamiltonian</h3>
+<ul>
+<li><strong>Binary → Spin</strong>: <span class="math inline">\(x_i = \frac{1 - Z_i}{2}\)</span></li>
+<li><strong>Cost Hamiltonian</strong>: <span class="math inline">\(H_C = \sum_i h_i Z_i + \sum_{i&lt;j} J_{ij} Z_i Z_j\)</span></li>
+<li><strong>Mixer Hamiltonian</strong>: <span class="math inline">\(H_M = \sum_i X_i\)</span></li>
+</ul>
+<h3 id="qaoa">QAOA</h3>
+<ul>
+<li><strong>State evolution</strong>: <span class="math inline">\(|\psi\rangle = \prod_{l=1}^{p} e^{-i\beta_l H_M} e^{-i\gamma_l H_C} |+\rangle^n\)</span></li>
+<li><strong>Total parameters</strong>: <span class="math inline">\(2p\)</span> (<span class="math inline">\(p\)</span> gammas + <span class="math inline">\(p\)</span> betas)</li>
+<li><strong>Convergence</strong>: As <span class="math inline">\(p \to \infty\)</span>, QAOA <span class="math inline">\(\to\)</span> exact AQC</li>
+</ul>
+<h3 id="simulated-annealing">Simulated Annealing</h3>
+<ul>
+<li><strong>Acceptance probability</strong>: <span class="math inline">\(P(\text{accept worse}) = e^{-\Delta E / T}\)</span></li>
+<li><strong>Cooling schedule</strong>: <span class="math inline">\(T_{n+1} = \alpha \cdot T_n\)</span> (typically <span class="math inline">\(\alpha = 0.99\)</span>)</li>
+</ul>
+<hr />
+<p><em>This guide accompanies the quantum-portfolio-opt repository. All code, notebooks, and results are available on GitHub.</em></p>
+</body>
+</html>
