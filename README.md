@@ -20,6 +20,7 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
+- [Architecture](#-architecture)
 - [Roadmap](#-roadmap)
 - [Repository Structure](#-repository-structure)
 - [Quickstart](#-quickstart)
@@ -39,6 +40,46 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 | **Benchmark** | Brute force (ground truth), greedy selection, simulated annealing |
 | **Universe** | 5–8 Bank Nifty stocks |
 | **Hardware** | IBM Quantum real device + Aer simulator |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart TD
+    subgraph Data Layer
+        A[yfinance API] -->|Fetch OHLCV| B(Raw Stock Data)
+        B -->|Compute| C[Daily Returns μ]
+        B -->|Compute| D[Covariance Σ]
+    end
+
+    subgraph Mathematical Formulation
+        C --> E{QUBO Builder}
+        D --> E
+        E -->|Penalty & Risk weights| F[Q Matrix]
+    end
+
+    subgraph Classical Benchmarks
+        F --> G[Brute Force]
+        F --> H[Greedy Selection]
+        F --> I[Simulated Annealing]
+    end
+
+    subgraph Quantum Pipeline
+        F --> J[qubo_to_ising]
+        J --> K[QAOA Circuit p-layers]
+        K --> L((COBYLA Optimizer))
+        L --> M{IBM Qiskit Sampler}
+        M -->|Measure| N[Probability Distribution]
+        N -.->|Update Params| L
+        N --> O[Optimal Bitstring]
+    end
+
+    G --> P[Results Analysis]
+    H --> P
+    I --> P
+    O --> P
+```
 
 ---
 
@@ -74,8 +115,8 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 - [x] Quantify noise impact: simulator vs real hardware delta
 
 ### 🚀 Phase 6 — Portfolio + Showcase `Day 15`
-- [ ] Final GitHub repo polish (this README, architecture diagram)
-- [ ] Export clean figures to `/results/figures/`
+- [x] Final GitHub repo polish (this README, architecture diagram)
+- [x] Export clean figures to `/results/figures/`
 
 
 ---

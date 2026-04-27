@@ -206,6 +206,20 @@ $$|\psi(\gamma, \beta)\rangle = \prod_{l=1}^{p} \left[ e^{-i\beta_l H_M} \cdot e
 
 ### The Trotterization Connection
 
+### Why $R_z$ and $R_x$ Gates? (The "Digital Chopping")
+
+If we want to simulate the Cost Hamiltonian $H_C$ and Mixer Hamiltonian $H_M$ on a circuit, we have to translate them into standard quantum logic gates.
+
+1. **The Cost Layer ($R_z$ gates)**: 
+   $H_C$ is built entirely out of Pauli-Z operators (because the QUBO uses binary variables, and Pauli-Z measures exactly 0 or 1 states). 
+   Mathematically, evolving the system by $e^{-i\gamma H_C}$ means applying **$R_z$ rotations** (and $ZZ$ coupling rotations for the $Q_{ij}$ terms) to the qubits. The angle $\gamma$ dictates how far they rotate. These $R_z$ gates don't change the *probability* of a state; they only change its *phase* based on how good the portfolio is.
+
+2. **The Mixer Layer ($R_x$ gates)**: 
+   $H_M$ is built entirely out of Pauli-X operators. Evolving the system by $e^{-ieta H_M}$ means applying **$R_x$ rotations** to every qubit. The $R_x$ gate physically flips the state between $|0\rangle$ and $|1\rangle$. The angle $eta$ dictates how aggressively it flips. This is how QAOA explores new portfolios.
+
+Because a circuit-based quantum computer cannot run $H_C$ and $H_M$ at the exact same time (like AQC does), it "chops" the process into alternating digital slices: a burst of $R_z$ gates, then a burst of $R_x$ gates. This is Trotterization.
+
+
 As $p \to \infty$, QAOA mathematically converges to **exact Adiabatic Quantum Computation**. Each layer becomes an infinitesimal step in the continuous adiabatic evolution. This is called **Trotterization** — QAOA is a digitized (discretized) version of AQC.
 
 ### Parameters
