@@ -209,11 +209,11 @@ pytest --tb=short
 
 | Method | Portfolio Return | Portfolio Risk | Exec Time | Match Optimal? |
 |---|---|---|---|---|
-| Brute Force | — | — | — | ✅ Ground truth |
-| QAOA (Simulator) | — | — | — | — |
-| QAOA (Real Hardware) | — | — | — | — |
-| Greedy | — | — | — | — |
-| Simulated Annealing | — | — | — | — |
+| Brute Force | +44.04% | 38.57% | 0.0002s | ✅ Ground truth |
+| QAOA (Simulator, p=1) | +4.64% | 78.07% | 75.80s | ❌ Missed (invalid k) |
+| QAOA (Real Hardware) | — | — | — | ⏳ Pending |
+| Greedy | +44.04% | 38.57% | 0.0001s | ✅ Yes |
+| Simulated Annealing | +44.04% | 38.57% | 0.0280s | ✅ Yes |
 
 ---
 
