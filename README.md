@@ -7,7 +7,7 @@
 [![Qiskit](https://img.shields.io/badge/Qiskit-1.x-6929C4?logo=ibm&logoColor=white)](https://qiskit.org/)
 [![IBM Quantum](https://img.shields.io/badge/IBM%20Quantum-Real%20Hardware-000000?logo=ibm&logoColor=white)](https://quantum.ibm.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-In%20Progress-orange)](https://github.com/johngeorgea157-stack/quantum-portfolio-opt)
+[![Status](https://img.shields.io/badge/Status-Completed-success)](https://github.com/johngeorgea157-stack/quantum-portfolio-opt)
 
 > Benchmarking QAOA against classical methods for portfolio optimization on NIFTY/Bank Nifty stocks — includes QUBO formulation, brute-force ground truth, real IBM hardware runs, and honest failure analysis.
 

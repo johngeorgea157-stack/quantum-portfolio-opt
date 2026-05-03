@@ -2,7 +2,7 @@ import numpy as np
 import time
 import math
 
-def simulated_annealing_qubo(Q, k, T_start=1000.0, cooling_rate=0.99, max_iter=10000):
+def simulated_annealing_qubo(Q, k, T_start=1000.0, cooling_rate=0.99, max_iter=10000, seed=None):
     """
     Simulated Annealing heuristic for the QUBO formulation of the portfolio problem.
     Maintains exactly k selected assets at all times to satisfy the constraint naturally.
@@ -13,12 +13,16 @@ def simulated_annealing_qubo(Q, k, T_start=1000.0, cooling_rate=0.99, max_iter=1
         T_start: Float, initial high temperature
         cooling_rate: Float, multiplier to cool temperature (e.g. 0.99)
         max_iter: Int, max iterations
+        seed: Int, optional random seed for reproducibility
         
     Returns:
         best_x: numpy array (binary vector)
         best_obj: float
         exec_time: float
     """
+    if seed is not None:
+        np.random.seed(seed)
+        
     start_time = time.time()
     n = len(Q)
     
