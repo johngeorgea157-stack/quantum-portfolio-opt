@@ -13,7 +13,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 from classical.greedy import greedy_qubo_search
 from classical.sim_annealing import simulated_annealing_qubo
 
-
 # ── Fixtures ─────────────────────────────────────────────────────────────────
 
 

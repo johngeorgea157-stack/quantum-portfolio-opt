@@ -13,7 +13,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 from qaoa.qaoa_circuit import create_qaoa_circuit
 
-
 # ── Fixtures ─────────────────────────────────────────────────────────────────
 
 

@@ -13,7 +13,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 from qubo.qubo_builder import build_Q_matrix, compute_objective
 from qubo.brute_force import brute_force_solve
 
-
 # ── Fixtures ────────────────────────────────────────────────────────────────
 
 
