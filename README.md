@@ -25,6 +25,8 @@ This project applies the **Quantum Approximate Optimization Algorithm (QAOA)** t
 - [Repository Structure](#-repository-structure)
 - [Quickstart](#-quickstart)
 - [Results](#-results)
+- [Classical Methods](#-classical-methods-performance)
+- [Conclusions](#conclusions--key-insights)
 - [CI/CD Pipeline](#-cicd-pipeline)
 - [Limitations](#-limitations)
 - [Future Work](#-future-work)
@@ -265,6 +267,21 @@ pytest --tb=short
 
 ### Summary
 All methods (Brute Force, Greedy, SA, QAOA Simulator, QAOA Hardware) **converged to the same optimal portfolio**, validating the correctness of the formulation and solvers.
+
+---
+
+## 🎯 Conclusions & Key Insights
+
+**Hardware Noise is the Binding Constraint**  
+QAOA on real hardware (ibm_fez) achieved the optimal solution with **28.8% probability** (vs. 34.8% on simulator), showing NISQ constraints limit but don't eliminate correctness. Classical methods remain faster for small problems, but the infrastructure is ready to scale with hardware improvements.
+
+**Key Findings:**
+- ✅ All 5 algorithms (brute force, greedy, SA, QAOA sim, QAOA hardware) found **identical optimal solution**
+- ⚠️ Hardware noise reduced success probability from 34.8% → 28.8% (gate errors visible)
+- ⏱️ Classical speedup: Greedy 0.0001s vs. QAOA Simulator ~75s (both correct)
+- 🔮 QAOA will help when: n ~ 20–50 and fault-tolerant error correction available
+
+**See full analysis:** [docs/CONCLUSIONS.md](docs/CONCLUSIONS.md)
 
 ---
 
