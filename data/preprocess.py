@@ -76,9 +76,7 @@ def load_prices(input_dir):
     """
     csv_files = glob.glob(os.path.join(input_dir, "*.csv"))
     if not csv_files:
-        raise FileNotFoundError(
-            f"No CSV files found in '{input_dir}'. Run fetch_data.py first."
-        )
+        raise FileNotFoundError(f"No CSV files found in '{input_dir}'. Run fetch_data.py first.")
 
     adj_close_data = {}
     for file in csv_files:
@@ -95,9 +93,7 @@ def load_prices(input_dir):
         elif "Close" in df.columns:
             adj_close_data[ticker] = df["Close"]
         else:
-            print(
-                f"  ⚠  Could not find Close prices for {ticker}. Columns: {list(df.columns)}"
-            )
+            print(f"  ⚠  Could not find Close prices for {ticker}. Columns: {list(df.columns)}")
 
     if not adj_close_data:
         raise ValueError("No valid price data could be loaded from any CSV file.")
@@ -201,13 +197,9 @@ def compute_correlation(returns_df):
     print(f"   Mean correlation:     {corr_flat.mean():.4f}")
 
     if corr_flat.mean() > 0.6:
-        print(
-            "\n💡 Portfolio Insight: HIGH average correlation → Limited diversification"
-        )
+        print("\n💡 Portfolio Insight: HIGH average correlation → Limited diversification")
     elif corr_flat.mean() > 0.4:
-        print(
-            "\n💡 Portfolio Insight: MODERATE average correlation → Some diversification"
-        )
+        print("\n💡 Portfolio Insight: MODERATE average correlation → Some diversification")
     else:
         print("\n💡 Portfolio Insight: LOW average correlation → Good diversification")
 
@@ -276,9 +268,7 @@ def plot_return_distributions(returns_df, results_dir):
     axes = axes.flatten()
 
     for idx, stock in enumerate(returns_df.columns):
-        axes[idx].hist(
-            returns_df[stock], bins=50, alpha=0.7, color="steelblue", edgecolor="black"
-        )
+        axes[idx].hist(returns_df[stock], bins=50, alpha=0.7, color="steelblue", edgecolor="black")
         axes[idx].axvline(
             returns_df[stock].mean(),
             color="red",
@@ -286,9 +276,7 @@ def plot_return_distributions(returns_df, results_dir):
             linewidth=2,
             label="Mean",
         )
-        axes[idx].set_title(
-            f"{stock} – Daily Log Return Distribution", fontweight="bold"
-        )
+        axes[idx].set_title(f"{stock} – Daily Log Return Distribution", fontweight="bold")
         axes[idx].set_xlabel("Daily Log Return")
         axes[idx].set_ylabel("Frequency")
         axes[idx].legend()

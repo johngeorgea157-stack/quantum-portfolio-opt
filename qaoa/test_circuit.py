@@ -69,9 +69,7 @@ def test_circuit_depth_increases_with_p(simple_Q):
     """Deeper p should produce a deeper circuit."""
     c1, _, _ = create_qaoa_circuit(simple_Q, p=1)
     c2, _, _ = create_qaoa_circuit(simple_Q, p=2)
-    assert (
-        c2.decompose().depth() > c1.decompose().depth()
-    ), "p=2 circuit should be deeper than p=1"
+    assert c2.decompose().depth() > c1.decompose().depth(), "p=2 circuit should be deeper than p=1"
 
 
 def test_circuit_has_measurements(simple_Q):

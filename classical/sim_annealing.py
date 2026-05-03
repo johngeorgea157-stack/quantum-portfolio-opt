@@ -3,9 +3,7 @@ import time
 import math
 
 
-def simulated_annealing_qubo(
-    Q, k, T_start=1000.0, cooling_rate=0.99, max_iter=10000, seed=None
-):
+def simulated_annealing_qubo(Q, k, T_start=1000.0, cooling_rate=0.99, max_iter=10000, seed=None):
     """
     Simulated Annealing heuristic for the QUBO formulation of the portfolio problem.
     Maintains exactly k selected assets at all times to satisfy the constraint naturally.

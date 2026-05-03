@@ -32,9 +32,7 @@ def load_portfolio_data(
     sigma = np.load(os.path.join(cached_dir, "sigma.npy"))
 
     # Load stock names from CSV
-    expected_returns_df = pd.read_csv(
-        os.path.join(cached_dir, "expected_returns.csv"), index_col=0
-    )
+    expected_returns_df = pd.read_csv(os.path.join(cached_dir, "expected_returns.csv"), index_col=0)
     stock_names = expected_returns_df.index.tolist()
 
     return mu, sigma, stock_names

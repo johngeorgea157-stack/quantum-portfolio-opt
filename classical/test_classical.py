@@ -137,6 +137,4 @@ def test_sa_better_than_random(Q_matrix):
         random_objs.append(compute_objective(Q, x))
 
     avg_random = np.mean(random_objs)
-    assert (
-        sa_obj <= avg_random
-    ), f"SA obj {sa_obj:.4f} worse than random avg {avg_random:.4f}"
+    assert sa_obj <= avg_random, f"SA obj {sa_obj:.4f} worse than random avg {avg_random:.4f}"
