@@ -27,19 +27,19 @@ jobs:
 
       - name: Run QUBO tests
         run: |
-          pytest qubo/tests/test_qubo.py -v --tb=short
+          pytest qubo/test_qubo.py -v --tb=short
 
       - name: Run QAOA circuit tests
         run: |
-          pytest qaoa/tests/test_circuit.py -v --tb=short
+          pytest qaoa/test_circuit.py -v --tb=short
 
       - name: Run classical solver tests
         run: |
-          pytest classical/tests/test_classical.py -v --tb=short
+          pytest classical/test_classical.py -v --tb=short
 
       - name: Run full suite with coverage
         run: |
-          pytest qubo/tests/ qaoa/tests/ classical/tests/ \
+          pytest qubo/ qaoa/ classical/ \
             --cov=qubo --cov=qaoa --cov=classical \
             --cov-report=xml \
             --cov-report=term-missing
