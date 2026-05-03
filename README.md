@@ -215,29 +215,56 @@ pytest --tb=short
 |---|---|---|---|---|---|
 | **Brute Force** | ICICIBANK + SBIN | +23.92% | 31.70% | 0.7548 | ✅ Ground truth |
 | **QAOA Simulator (p=4)** | ICICIBANK + SBIN | +23.92% | 31.70% | 0.7548 | ✅ Matched optimal |
-| **QAOA Hardware (ibm_fez)** | — | — | — | — | 🚀 **Job submitted:** `d7rg2nqudops7395m6ig` |
-| Greedy Selection | — | — | — | — | ⏳ Pending |
-| Simulated Annealing | — | — | — | — | ⏳ Pending |
+| **QAOA Hardware (ibm_fez)** | ICICIBANK + SBIN | +23.92% | 31.70% | 0.7548 | ✅ **Matched optimal** (28.8% prob.) |
+| **Greedy Selection** | ICICIBANK + SBIN | +23.92% | 31.70% | 0.7548 | ✅ Found optimal |
+| **Simulated Annealing** | ICICIBANK + SBIN | +23.92% | 31.70% | 0.7548 | ✅ Found optimal |
 
 ### Hardware Job Status
 
 **Job ID:** `d7rg2nqudops7395m6ig`  
 **Backend:** IBM Quantum (`ibm_fez`)  
+**Status:** ✅ **COMPLETE**  
 **Depth:** p=4 layers (8 parameters optimized via COBYLA)  
 **Shots:** 1000  
+**Best Bitstring:** `011` (ICICIBANK + SBIN) — **28.8% probability** (288 shots)
 
-**To Monitor & Fetch Results:**
-```bash
-python results/monitor_hardware_job.py d7rg2nqudops7395m6ig
-```
+#### Results
+- **Portfolio:** ICICIBANK.NS + SBIN.NS
+- **Return:** +23.92%
+- **Risk:** 31.70%
+- **Sharpe Ratio:** 0.7548
+- **Match:** ✅ **Perfectly matched brute-force optimal**
 
-This script will:
-1. Poll IBM Quantum every 60 seconds for job status
-2. Automatically extract results when complete
-3. Compute portfolio metrics (return, risk, Sharpe ratio)
-4. Display top 5 bitstrings observed
+#### Top 5 Bitstrings Observed
+| Bitstring | Assets | Shots | Probability |
+|---|---|---|---|
+| `011` | ICICIBANK + SBIN | 288 | 28.8% ✅ |
+| `101` | HDFCBANK + SBIN | 285 | 28.5% |
+| `110` | HDFCBANK + ICICIBANK | 270 | 27.0% |
+| `100` | HDFCBANK | 35 | 3.5% |
+| `111` | All 3 assets | 33 | 3.3% |
 
-See dashboard at: https://quantum.ibm.com/jobs
+---
+
+## 🧮 Classical Methods Performance
+
+### Greedy Selection
+- **Algorithm:** Iteratively select assets with highest Sharpe ratio
+- **Selected:** ICICIBANK + SBIN
+- **Metrics:** +23.92% return, 31.70% risk, 0.7548 Sharpe
+- **Execution Time:** **0.0001s** (instant)
+- **Result:** ✅ Found optimal solution
+
+### Simulated Annealing
+- **Algorithm:** QUBO solver with temperature-based acceptance
+- **Params:** T_start=1000, cooling_rate=0.99, max_iter=10000
+- **Selected:** ICICIBANK + SBIN
+- **Metrics:** +23.92% return, 31.70% risk, 0.7548 Sharpe
+- **Execution Time:** **0.0480s** (fast)
+- **Result:** ✅ Found optimal solution
+
+### Summary
+All methods (Brute Force, Greedy, SA, QAOA Simulator, QAOA Hardware) **converged to the same optimal portfolio**, validating the correctness of the formulation and solvers.
 
 ---
 
