@@ -4,7 +4,7 @@
 [![Tests](https://github.com/johngeorgea157-stack/quantum-portfolio-opt/actions/workflows/test.yml/badge.svg)](https://github.com/johngeorgea157-stack/quantum-portfolio-opt/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/johngeorgea157-stack/quantum-portfolio-opt/branch/main/graph/badge.svg)](https://codecov.io/gh/johngeorgea157-stack/quantum-portfolio-opt)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Qiskit](https://img.shields.io/badge/Qiskit-1.x-6929C4?logo=ibm&logoColor=white)](https://qiskit.org/)
+[![Qiskit](https://img.shields.io/badge/Qiskit-2.x-6929C4?logo=ibm&logoColor=white)](https://qiskit.org/)
 [![IBM Quantum](https://img.shields.io/badge/IBM%20Quantum-Real%20Hardware-000000?logo=ibm&logoColor=white)](https://quantum.ibm.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Completed-success)](https://github.com/johngeorgea157-stack/quantum-portfolio-opt)
