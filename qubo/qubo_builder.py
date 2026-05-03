@@ -78,15 +78,15 @@ def build_Q_matrix(returns, cov, penalty, k, risk_weight=1.0):
             if i == j:
                 # DIAGONAL: return contribution + risk (self-variance) + penalty diagonal
                 Q[i][i] = (
-                    -returns[i]                    # maximise return  (negated)
-                    + risk_weight * cov[i][i]      # risk: own variance
-                    + penalty * (1 - 2 * k)        # penalty: from (x_i - k)^2 expansion
+                    -returns[i]  # maximise return  (negated)
+                    + risk_weight * cov[i][i]  # risk: own variance
+                    + penalty * (1 - 2 * k)  # penalty: from (x_i - k)^2 expansion
                 )
             else:
                 # OFF-DIAGONAL: risk (covariance) + penalty cross terms
                 Q[i][j] = (
-                    risk_weight * cov[i][j]        # risk: covariance between assets i and j
-                    + penalty                      # penalty: from Σ_i Σ_j x_i*x_j cross terms
+                    risk_weight * cov[i][j]  # risk: covariance between assets i and j
+                    + penalty  # penalty: from Σ_i Σ_j x_i*x_j cross terms
                 )
 
     # Q must be symmetric for a valid QUBO
@@ -110,7 +110,7 @@ def compute_objective(Q, x):
     float — objective value (lower is better for minimisation)
     """
     x = np.array(x)
-    return float(x @ Q @ x)      # dot product shorthand for x^T Q x
+    return float(x @ Q @ x)  # dot product shorthand for x^T Q x
 
 
 def decode_bitstring(x, tickers):

@@ -16,6 +16,7 @@ from classical.sim_annealing import simulated_annealing_qubo
 
 # ── Fixtures ─────────────────────────────────────────────────────────────────
 
+
 @pytest.fixture
 def problem():
     """Standard 5-asset test problem."""
@@ -32,11 +33,13 @@ def problem():
 def Q_matrix(problem):
     """Pre-built Q matrix for SA tests."""
     from qubo.qubo_builder import build_Q_matrix
+
     returns, cov, n, k = problem
     return build_Q_matrix(returns, cov, penalty=5.0, k=k), n, k
 
 
 # ── Greedy Tests ─────────────────────────────────────────────────────────────
+
 
 def test_greedy_output_length(Q_matrix):
     """Greedy must return a binary vector of length n."""
@@ -80,6 +83,7 @@ def test_greedy_prefers_high_return(Q_matrix, problem):
 
 # ── Simulated Annealing Tests ─────────────────────────────────────────────────
 
+
 def test_sa_output_length(Q_matrix):
     """SA must return a binary vector of length n."""
     Q, n, k = Q_matrix
@@ -120,6 +124,7 @@ def test_sa_reproducible_with_seed(Q_matrix):
 def test_sa_better_than_random(Q_matrix):
     """SA should outperform a random feasible solution on average."""
     from qubo.qubo_builder import compute_objective
+
     Q, n, k = Q_matrix
     _, sa_obj, _ = simulated_annealing_qubo(Q, k, seed=42)
 
@@ -132,6 +137,6 @@ def test_sa_better_than_random(Q_matrix):
         random_objs.append(compute_objective(Q, x))
 
     avg_random = np.mean(random_objs)
-    assert sa_obj <= avg_random, (
-        f"SA obj {sa_obj:.4f} worse than random avg {avg_random:.4f}"
-    )
+    assert (
+        sa_obj <= avg_random
+    ), f"SA obj {sa_obj:.4f} worse than random avg {avg_random:.4f}"

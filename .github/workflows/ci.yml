@@ -29,7 +29,7 @@ jobs:
           flake8 data/ qubo/ qaoa/ classical/ \
             --max-line-length=100 \
             --exclude=__pycache__,*.ipynb_checkpoints \
-            --ignore=E402
+            --ignore=E402,W503
 
       - name: Run black (formatting check)
         run: |

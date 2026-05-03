@@ -16,7 +16,9 @@ from scipy.optimize import minimize
 import os
 
 
-def load_portfolio_data(cached_dir='/Users/johngeorgealexander/qc/quantum-portfolio-opt/data/cached'):
+def load_portfolio_data(
+    cached_dir="/Users/johngeorgealexander/qc/quantum-portfolio-opt/data/cached",
+):
     """
     Load portfolio data from Day 2 cached results.
 
@@ -26,11 +28,13 @@ def load_portfolio_data(cached_dir='/Users/johngeorgealexander/qc/quantum-portfo
         stock_names (list): List of stock names
     """
     # Load mean returns (μ) and covariance (Σ)
-    mu = np.load(os.path.join(cached_dir, 'mu.npy'))
-    sigma = np.load(os.path.join(cached_dir, 'sigma.npy'))
+    mu = np.load(os.path.join(cached_dir, "mu.npy"))
+    sigma = np.load(os.path.join(cached_dir, "sigma.npy"))
 
     # Load stock names from CSV
-    expected_returns_df = pd.read_csv(os.path.join(cached_dir, 'expected_returns.csv'), index_col=0)
+    expected_returns_df = pd.read_csv(
+        os.path.join(cached_dir, "expected_returns.csv"), index_col=0
+    )
     stock_names = expected_returns_df.index.tolist()
 
     return mu, sigma, stock_names
@@ -66,8 +70,11 @@ def optimize_portfolio(mu, sigma, target_return):
 
     # Constraints
     constraints = [
-        {'type': 'eq', 'fun': lambda w: w.sum() - 1},  # weights sum to 1
-        {'type': 'eq', 'fun': lambda w: portfolio_return(w, mu) - target_return}  # target return
+        {"type": "eq", "fun": lambda w: w.sum() - 1},  # weights sum to 1
+        {
+            "type": "eq",
+            "fun": lambda w: portfolio_return(w, mu) - target_return,
+        },  # target return
     ]
 
     # Bounds: no short selling (w_i >= 0)
@@ -78,10 +85,10 @@ def optimize_portfolio(mu, sigma, target_return):
         portfolio_variance,
         w0,
         args=(sigma,),
-        method='SLSQP',
+        method="SLSQP",
         bounds=bounds,
         constraints=constraints,
-        options={'disp': False}
+        options={"disp": False},
     )
 
     if result.success:
@@ -118,12 +125,14 @@ def generate_efficient_frontier(mu, sigma, n_points=50):
     for target_ret in target_returns:
         w_opt, ret_opt, var_opt = optimize_portfolio(mu, sigma, target_ret)
         if w_opt is not None:
-            portfolios.append({
-                'return': ret_opt,
-                'variance': var_opt,
-                'volatility': np.sqrt(var_opt),
-                'weights': w_opt
-            })
+            portfolios.append(
+                {
+                    "return": ret_opt,
+                    "variance": var_opt,
+                    "volatility": np.sqrt(var_opt),
+                    "weights": w_opt,
+                }
+            )
 
     return portfolios
 
@@ -136,8 +145,8 @@ def get_efficient_frontier_data(mu, sigma, n_points=30):
         tuple: (returns_list, volatilities_list, portfolios_list)
     """
     portfolios = generate_efficient_frontier(mu, sigma, n_points)
-    returns = [p['return'] for p in portfolios]
-    volatilities = [p['volatility'] for p in portfolios]
+    returns = [p["return"] for p in portfolios]
+    volatilities = [p["volatility"] for p in portfolios]
     return returns, volatilities, portfolios
 
 
@@ -168,22 +177,28 @@ if __name__ == "__main__":
     portfolios = generate_efficient_frontier(mu, sigma, n_points=20)
     if portfolios:
         print(f"\nGenerated {len(portfolios)} portfolios on efficient frontier")
-        print(f"Return range: {min(p['return'] for p in portfolios):.4f} to {max(p['return'] for p in portfolios):.4f}")
-        print(f"Volatility range: {min(p['volatility'] for p in portfolios):.4f} to {max(p['volatility'] for p in portfolios):.4f}")
+        min_ret = min(p["return"] for p in portfolios)
+        max_ret = max(p["return"] for p in portfolios)
+        print(f"Return range: {min_ret:.4f} to {max_ret:.4f}")
+
+        min_vol = min(p["volatility"] for p in portfolios)
+        max_vol = max(p["volatility"] for p in portfolios)
+        print(f"Volatility range: {min_vol:.4f} to {max_vol:.4f}")
 
     print("=" * 70)
 import time
+
 
 def greedy_qubo_search(Q, k):
     """
     Greedy heuristic to find an approximate solution for a QUBO.
     Iteratively adds the single asset that minimizes the objective
     until k assets are selected.
-    
+
     Args:
         Q: QUBO matrix (numpy array)
         k: Int, number of stocks to pick
-        
+
     Returns:
         best_x: numpy array (binary vector)
         best_obj: float
@@ -192,28 +207,28 @@ def greedy_qubo_search(Q, k):
     start_time = time.time()
     n = len(Q)
     x = np.zeros(n, dtype=int)
-    
+
     # We want exactly k stocks
     for _ in range(k):
         best_gain = float("inf")
         best_idx = -1
-        
+
         # Test flipping each 0 to 1
         for i in range(n):
             if x[i] == 0:
                 x_test = x.copy()
                 x_test[i] = 1
                 obj = float(x_test @ Q @ x_test)
-                
+
                 if obj < best_gain:
                     best_gain = obj
                     best_idx = i
-                    
+
         # Permanently flip the best one
         if best_idx != -1:
             x[best_idx] = 1
-            
+
     final_obj = float(x @ Q @ x)
     exec_time = time.time() - start_time
-    
+
     return x, final_obj, exec_time

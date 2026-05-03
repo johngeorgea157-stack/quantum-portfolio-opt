@@ -16,6 +16,7 @@ from qubo.brute_force import brute_force_solve
 
 # ── Fixtures ────────────────────────────────────────────────────────────────
 
+
 @pytest.fixture
 def sample_data():
     """Small 4-asset problem with known properties."""
@@ -29,6 +30,7 @@ def sample_data():
 
 
 # ── Q Matrix Tests ───────────────────────────────────────────────────────────
+
 
 def test_Q_matrix_shape(sample_data):
     """Q matrix must be square with size = number of assets."""
@@ -55,14 +57,15 @@ def test_Q_matrix_no_nan(sample_data):
 def test_Q_matrix_penalty_effect(sample_data):
     """Higher penalty should increase diagonal dominance."""
     returns, cov, n = sample_data
-    Q_low  = build_Q_matrix(returns, cov, penalty=0.1, k=2)
+    Q_low = build_Q_matrix(returns, cov, penalty=0.1, k=2)
     Q_high = build_Q_matrix(returns, cov, penalty=10.0, k=2)
-    diag_low  = np.sum(np.abs(np.diag(Q_low)))
+    diag_low = np.sum(np.abs(np.diag(Q_low)))
     diag_high = np.sum(np.abs(np.diag(Q_high)))
     assert diag_high > diag_low, "Higher penalty should increase diagonal magnitude"
 
 
 # ── Objective Function Tests ─────────────────────────────────────────────────
+
 
 def test_objective_all_zeros(sample_data):
     """All-zero bitstring should yield objective = 0."""
@@ -84,6 +87,7 @@ def test_objective_known_bitstring(sample_data):
 
 
 # ── Brute Force Solver Tests ─────────────────────────────────────────────────
+
 
 def test_brute_force_returns_valid_bitstring(sample_data):
     """Brute force must return a binary vector of correct length."""

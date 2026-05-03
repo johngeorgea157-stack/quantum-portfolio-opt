@@ -2,6 +2,7 @@
 Authenticates with IBM Quantum and submits the final optimal QAOA circuit to real hardware.
 WARNING: Execution is subject to real-world cloud queue times.
 """
+
 import sys
 import os
 import json
@@ -16,15 +17,16 @@ from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 from qiskit.primitives import StatevectorEstimator
 
 # Make sure we can import from the 'qubo' module
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from qubo.qubo_builder import build_Q_matrix
 from qaoa_circuit import create_qaoa_circuit
+
 
 def authenticate():
     print("Authenticating with IBM Quantum...")
     possible_paths = ["../apikey.json", "apikey.json"]
     api_key_path = None
-    
+
     for path in possible_paths:
         if os.path.exists(path):
             api_key_path = path
@@ -37,20 +39,26 @@ def authenticate():
     else:
         ibm_token = getpass.getpass("Please paste your IBM Quantum API Token here: ")
 
-    QiskitRuntimeService.save_account(channel="ibm_quantum_platform", token=ibm_token, set_as_default=True, overwrite=True)
+    QiskitRuntimeService.save_account(
+        channel="ibm_quantum_platform",
+        token=ibm_token,
+        set_as_default=True,
+        overwrite=True,
+    )
     return QiskitRuntimeService()
+
 
 def main():
     service = authenticate()
-    
+
     # --- 1. Data Fetching ---
-    tickers = ['HDFCBANK.NS', 'ICICIBANK.NS', 'SBIN.NS']
+    tickers = ["HDFCBANK.NS", "ICICIBANK.NS", "SBIN.NS"]
     print(f"\nFetching live data for {tickers}...")
     close_prices = pd.DataFrame()
     for t in tickers:
-        df = yf.download(t, period='1y', auto_adjust=True, progress=False)
-        close_prices[t] = df['Close']
-    
+        df = yf.download(t, period="1y", auto_adjust=True, progress=False)
+        close_prices[t] = df["Close"]
+
     close_prices = close_prices.dropna()
     daily_returns = close_prices.pct_change(fill_method=None).dropna()
     mu = daily_returns.mean().values * 252
@@ -77,9 +85,9 @@ def main():
 
     np.random.seed(42)
     initial_point = np.random.rand(qaoa_circuit.num_parameters) * np.pi
-    res = minimize(evaluate_expectation, initial_point, method='COBYLA')
+    res = minimize(evaluate_expectation, initial_point, method="COBYLA")
     optimal_params = res.x
-    print(f"✅ Local Optimization Complete! Parameters ready.")
+    print("✅ Local Optimization Complete! Parameters ready.")
 
     # --- 5. Real Hardware Execution ---
     optimized_circuit = qaoa_circuit.assign_parameters(optimal_params)
@@ -96,11 +104,15 @@ def main():
     print("\nSubmitting job to real hardware queue...")
     real_sampler = RealSampler(mode=backend)
     job = real_sampler.run([isa_circuit], shots=1000)
-    
+
     print("\n🚀 Job successfully submitted!")
     print(f"Job ID: {job.job_id()}")
     print("Dashboard: https://quantum.ibm.com/jobs")
-    print("\n(Note: Hardware queues may take hours. Run 'job = service.job(\"JOB_ID\")' later to retrieve!)")
+    print(
+        "\n(Note: Hardware queues may take hours. "
+        "Run 'job = service.job(\"JOB_ID\")' later to retrieve!)"
+    )
+
 
 if __name__ == "__main__":
     main()

@@ -40,17 +40,17 @@ def brute_force_solve(Q, n):
     best_x   : ndarray (n,) — the optimal binary vector
     best_obj : float        — the minimum objective value achieved
     """
-    best_x   = None
-    best_obj = float("inf")   # start with +infinity so any real value is better
+    best_x = None
+    best_obj = float("inf")  # start with +infinity so any real value is better
 
     # product([0,1], repeat=n) generates all 2^n binary combinations
     for bits in product([0, 1], repeat=n):
-        x   = np.array(bits, dtype=int)
-        obj = float(x @ Q @ x)      # f(x) = x^T Q x
+        x = np.array(bits, dtype=int)
+        obj = float(x @ Q @ x)  # f(x) = x^T Q x
 
         if obj < best_obj:
             best_obj = obj
-            best_x   = x.copy()
+            best_x = x.copy()
 
     return best_x, best_obj
 
@@ -73,7 +73,7 @@ def enumerate_all_solutions(Q, n, top_k=5):
     results = []
 
     for bits in product([0, 1], repeat=n):
-        x   = np.array(bits, dtype=int)
+        x = np.array(bits, dtype=int)
         obj = float(x @ Q @ x)
         results.append((x.copy(), obj))
 

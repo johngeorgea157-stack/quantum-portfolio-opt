@@ -42,13 +42,14 @@ import numpy as np
 import os
 import glob
 import matplotlib
-matplotlib.use("Agg")          # non-interactive backend — works without a display
+
+matplotlib.use("Agg")  # non-interactive backend — works without a display
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Set style for consistent visualizations
 sns.set_style("whitegrid")
-plt.rcParams['figure.figsize'] = (12, 6)
+plt.rcParams["figure.figsize"] = (12, 6)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -69,7 +70,7 @@ def load_prices(input_dir):
     """
     Reads every CSV in input_dir, pulls the 'Adj Close' (or 'Close') column,
     aligns all tickers on the same date index, and returns a clean DataFrame.
-    
+
     Why 'Adj Close'?  → It accounts for dividends and stock splits, giving a
     fair comparison of price movements over time.
     """
@@ -94,7 +95,9 @@ def load_prices(input_dir):
         elif "Close" in df.columns:
             adj_close_data[ticker] = df["Close"]
         else:
-            print(f"  ⚠  Could not find Close prices for {ticker}. Columns: {list(df.columns)}")
+            print(
+                f"  ⚠  Could not find Close prices for {ticker}. Columns: {list(df.columns)}"
+            )
 
     if not adj_close_data:
         raise ValueError("No valid price data could be loaded from any CSV file.")
@@ -107,7 +110,10 @@ def load_prices(input_dir):
     prices_df.ffill(inplace=True)
     prices_df.dropna(inplace=True)
 
-    print(f"\n✔  Loaded prices for {prices_df.shape[1]} assets over {prices_df.shape[0]} trading days.")
+    print(
+        f"\n✔  Loaded prices for {prices_df.shape[1]} assets "
+        f"over {prices_df.shape[0]} trading days."
+    )
     print(f"   Date range : {prices_df.index[0].date()} → {prices_df.index[-1].date()}")
     print(f"   Assets     : {list(prices_df.columns)}")
     return prices_df
@@ -151,13 +157,13 @@ def compute_statistics(returns_df, annual_factor=252):
 
     annual_factor = 252  (standard: approx. number of trading days per year)
     """
-    mu    = returns_df.mean()   * annual_factor   # Series  (n_assets,)
-    sigma = returns_df.cov()    * annual_factor   # DataFrame (n_assets, n_assets)
+    mu = returns_df.mean() * annual_factor  # Series  (n_assets,)
+    sigma = returns_df.cov() * annual_factor  # DataFrame (n_assets, n_assets)
 
     print(f"\n✔  Annualised Mean Returns (μ)  [annual_factor={annual_factor}]")
     _print_df("μ — Expected Annual Return per Asset", mu.to_frame(name="μ (annual)"))
 
-    print(f"\n✔  Annualised Covariance Matrix (Σ)")
+    print("\n✔  Annualised Covariance Matrix (Σ)")
     _print_df("Σ — Covariance Matrix", sigma)
 
     return mu, sigma
@@ -182,25 +188,29 @@ def compute_correlation(returns_df):
       independent → maximum diversification → minimum portfolio risk.
     """
     corr = returns_df.corr()
-    print(f"\n✔  Correlation Matrix")
+    print("\n✔  Correlation Matrix")
     _print_df("Correlation Matrix (−1 to +1)", corr)
-    
+
     # Additional analysis
     mask = np.triu(np.ones_like(corr, dtype=bool), k=1)
     corr_flat = corr.values[mask]
-    
-    print(f"\n✔  Correlation Statistics:")
+
+    print("\n✔  Correlation Statistics:")
     print(f"   Highest correlation:  {corr_flat.max():.4f}")
     print(f"   Lowest correlation:   {corr_flat.min():.4f}")
     print(f"   Mean correlation:     {corr_flat.mean():.4f}")
-    
+
     if corr_flat.mean() > 0.6:
-        print("\n💡 Portfolio Insight: HIGH average correlation → Limited diversification")
+        print(
+            "\n💡 Portfolio Insight: HIGH average correlation → Limited diversification"
+        )
     elif corr_flat.mean() > 0.4:
-        print("\n💡 Portfolio Insight: MODERATE average correlation → Some diversification")
+        print(
+            "\n💡 Portfolio Insight: MODERATE average correlation → Some diversification"
+        )
     else:
         print("\n💡 Portfolio Insight: LOW average correlation → Good diversification")
-    
+
     return corr
 
 
@@ -214,27 +224,37 @@ def plot_price_evolution(prices_df, results_dir):
     if prices_df.empty:
         print("⚠  Cannot plot prices: DataFrame is empty")
         return None
-    
+
     os.makedirs(results_dir, exist_ok=True)
-    
+
     prices_normalized = prices_df / prices_df.iloc[0] * 100
-    
+
     fig, ax = plt.subplots(figsize=(14, 7))
     for col in prices_normalized.columns:
-        ax.plot(prices_normalized.index, prices_normalized[col], label=col, linewidth=2, alpha=0.8)
-    
-    ax.set_title("Normalized Price Evolution (Base 100) – Bank Nifty Stocks (2 Years)",
-                 fontsize=14, fontweight="bold", pad=15)
+        ax.plot(
+            prices_normalized.index,
+            prices_normalized[col],
+            label=col,
+            linewidth=2,
+            alpha=0.8,
+        )
+
+    ax.set_title(
+        "Normalized Price Evolution (Base 100) – Bank Nifty Stocks (2 Years)",
+        fontsize=14,
+        fontweight="bold",
+        pad=15,
+    )
     ax.set_xlabel("Date", fontsize=12)
     ax.set_ylabel("Normalized Price Index", fontsize=12)
-    ax.legend(loc='best', fontsize=11)
+    ax.legend(loc="best", fontsize=11)
     ax.grid(True, alpha=0.3)
-    
+
     plt.tight_layout()
     save_path = os.path.join(results_dir, "price_evolution.png")
     fig.savefig(save_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
-    
+
     print(f"\n✔  Price evolution plot saved → {save_path}")
     return save_path
 
@@ -249,29 +269,43 @@ def plot_return_distributions(returns_df, results_dir):
     if returns_df.empty:
         print("⚠  Cannot plot returns: DataFrame is empty")
         return None
-    
+
     os.makedirs(results_dir, exist_ok=True)
-    
+
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
     axes = axes.flatten()
-    
+
     for idx, stock in enumerate(returns_df.columns):
-        axes[idx].hist(returns_df[stock], bins=50, alpha=0.7, color='steelblue', edgecolor='black')
-        axes[idx].axvline(returns_df[stock].mean(), color='red', linestyle='--', linewidth=2, label='Mean')
-        axes[idx].set_title(f"{stock} – Daily Log Return Distribution", fontweight='bold')
+        axes[idx].hist(
+            returns_df[stock], bins=50, alpha=0.7, color="steelblue", edgecolor="black"
+        )
+        axes[idx].axvline(
+            returns_df[stock].mean(),
+            color="red",
+            linestyle="--",
+            linewidth=2,
+            label="Mean",
+        )
+        axes[idx].set_title(
+            f"{stock} – Daily Log Return Distribution", fontweight="bold"
+        )
         axes[idx].set_xlabel("Daily Log Return")
         axes[idx].set_ylabel("Frequency")
         axes[idx].legend()
         axes[idx].grid(True, alpha=0.3)
-    
-    plt.suptitle("Return Distribution Analysis – Bank Nifty Stocks",
-                 fontsize=14, fontweight='bold', y=1.00)
+
+    plt.suptitle(
+        "Return Distribution Analysis – Bank Nifty Stocks",
+        fontsize=14,
+        fontweight="bold",
+        y=1.00,
+    )
     plt.tight_layout()
-    
+
     save_path = os.path.join(results_dir, "return_distributions.png")
     fig.savefig(save_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
-    
+
     print(f"✔  Return distribution plot saved → {save_path}")
     return save_path
 
@@ -303,12 +337,13 @@ def plot_correlation_heatmap(corr, results_dir):
 
     sns.heatmap(
         corr,
-        annot=True,          # print the correlation value inside each cell
-        fmt=".3f",           # 3 decimal places
+        annot=True,  # print the correlation value inside each cell
+        fmt=".3f",  # 3 decimal places
         cmap=cmap,
-        vmin=-1, vmax=1,     # fix scale to the full −1…+1 range
-        center=0,            # white = 0 (no correlation)
-        square=True,         # keep cells square for readability
+        vmin=-1,
+        vmax=1,  # fix scale to the full −1…+1 range
+        center=0,  # white = 0 (no correlation)
+        square=True,  # keep cells square for readability
         linewidths=1,
         linecolor="white",
         ax=ax,
@@ -318,7 +353,9 @@ def plot_correlation_heatmap(corr, results_dir):
 
     ax.set_title(
         "Day 2 – Correlation Heatmap\nBank Nifty Stocks (Log Returns, Annualised)",
-        fontsize=14, fontweight="bold", pad=18
+        fontsize=14,
+        fontweight="bold",
+        pad=18,
     )
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right", fontsize=11)
     ax.set_yticklabels(ax.get_yticklabels(), rotation=0, fontsize=11)
@@ -355,7 +392,7 @@ def save_artefacts(mu, sigma, corr, returns_df, output_dir):
     corr.to_csv(os.path.join(output_dir, "correlation_matrix.csv"))
     returns_df.to_csv(os.path.join(output_dir, "returns.csv"))
 
-    np.save(os.path.join(output_dir, "mu.npy"),    mu.values)
+    np.save(os.path.join(output_dir, "mu.npy"), mu.values)
     np.save(os.path.join(output_dir, "sigma.npy"), sigma.values)
 
     print(f"\n✔  All artefacts saved to: {output_dir}/")
@@ -377,9 +414,9 @@ def preprocess_data(input_dir, output_dir, results_dir=None):
     output_dir  : path to data/cached/   (processed artefacts)
     results_dir : path to results/        (heatmap PNG and other visualizations)
     """
-    print("\n" + "═"*70)
+    print("\n" + "═" * 70)
     print("  DAY 2 – FINANCE BASICS  |  preprocess.py")
-    print("═"*70)
+    print("═" * 70)
 
     # Step 0 – Load prices
     prices_df = load_prices(input_dir)
@@ -402,21 +439,21 @@ def preprocess_data(input_dir, output_dir, results_dir=None):
     # Step 4 – Save all artefacts
     save_artefacts(mu, sigma, corr, returns_df, output_dir)
 
-    print("\n" + "═"*70)
+    print("\n" + "═" * 70)
     print("  ✔ Done!  Day 2 preprocessing complete.")
     print("  📊 Visualizations saved to results/")
     print("  💾 Data cached in data/cached/ for downstream use")
     print("  🚀 Next → Day 3: Build the QUBO matrix using μ and Σ.")
-    print("═"*70 + "\n")
+    print("═" * 70 + "\n")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # ENTRY POINT
 # ─────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    base_dir    = os.path.dirname(__file__)
-    input_dir   = os.path.join(base_dir, "raw")
-    output_dir  = os.path.join(base_dir, "cached")
+    base_dir = os.path.dirname(__file__)
+    input_dir = os.path.join(base_dir, "raw")
+    output_dir = os.path.join(base_dir, "cached")
     results_dir = os.path.join(base_dir, "..", "results")
 
     print(f"Input  (raw CSVs) : {input_dir}")
