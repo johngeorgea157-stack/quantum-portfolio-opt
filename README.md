@@ -195,29 +195,88 @@ python qubo/brute_force.py
 # 5. Run QAOA on simulator
 python qaoa/run_simulator.py
 
-# 6. Run test suite
+# 6. (Optional) Submit to real IBM Quantum hardware
+python qaoa/run_hardware.py
+
+# 7. (Optional) Monitor hardware job (use Job ID from step 6)
+python results/monitor_hardware_job.py <JOB_ID>
+
+# 8. Run test suite
 pytest --tb=short
 ```
-
-> **IBM Quantum hardware runs** require an account token. Add it as a GitHub Secret (`IBM_TOKEN`) or set it locally via environment variable before running `qaoa/run_hardware.py`.
 
 ---
 
 ## 📊 Results
 
-> ⏳ Full results will be populated after Phase 4. Placeholder table below.
+### Benchmark Results (HDFCBANK, ICICIBANK, SBIN — k=2 assets)
 
-| Method | Portfolio Return | Portfolio Risk | Exec Time | Match Optimal? |
-|---|---|---|---|---|
-| Brute Force | +44.04% | 38.57% | 0.0002s | ✅ Ground truth |
-| QAOA (Simulator, p=1) | +4.64% | 78.07% | 75.80s | ❌ Missed (invalid k) |
-| QAOA (Real Hardware) | — | — | — | ⏳ Pending |
-| Greedy | +44.04% | 38.57% | 0.0001s | ✅ Yes |
-| Simulated Annealing | +44.04% | 38.57% | 0.0280s | ✅ Yes |
+| Method | Portfolio | Return | Risk | Sharpe | Status |
+|---|---|---|---|---|---|
+| **Brute Force** | ICICIBANK + SBIN | +23.92% | 31.70% | 0.7548 | ✅ Ground truth |
+| **QAOA Simulator (p=4)** | ICICIBANK + SBIN | +23.92% | 31.70% | 0.7548 | ✅ Matched optimal |
+| **QAOA Hardware (ibm_fez)** | — | — | — | — | 🚀 **Job submitted:** `d7rg2nqudops7395m6ig` |
+| Greedy Selection | — | — | — | — | ⏳ Pending |
+| Simulated Annealing | — | — | — | — | ⏳ Pending |
+
+### Hardware Job Status
+
+**Job ID:** `d7rg2nqudops7395m6ig`  
+**Backend:** IBM Quantum (`ibm_fez`)  
+**Depth:** p=4 layers (8 parameters optimized via COBYLA)  
+**Shots:** 1000  
+
+**To Monitor & Fetch Results:**
+```bash
+python results/monitor_hardware_job.py d7rg2nqudops7395m6ig
+```
+
+This script will:
+1. Poll IBM Quantum every 60 seconds for job status
+2. Automatically extract results when complete
+3. Compute portfolio metrics (return, risk, Sharpe ratio)
+4. Display top 5 bitstrings observed
+
+See dashboard at: https://quantum.ibm.com/jobs
 
 ---
 
-## 🔄 CI/CD Pipeline
+## � Running QAOA on Real Hardware
+
+
+### Submit Hardware Job
+```bash
+python qaoa/run_hardware.py
+```
+
+This will:
+1. **Authenticate** with IBM Quantum
+2. **Fetch live data** for 3 stocks (HDFCBANK, ICICIBANK, SBIN)
+3. **Optimize locally** using COBYLA on classical CPU (StatevectorEstimator) — **saves IBM queue time**
+4. **Transpile** the optimized circuit for target hardware (Optimization Level 3)
+5. **Submit** to the least-busy real IBM Quantum device (1000 shots)
+6. **Print Job ID** for later retrieval
+
+### Monitor Job Status
+Once submitted, monitor in real-time:
+```bash
+python results/monitor_hardware_job.py <JOB_ID>
+```
+
+Example:
+```bash
+python results/monitor_hardware_job.py d7rg2nqudops7395m6ig
+```
+
+The monitor script will:
+- Check job status every 60 seconds
+- Auto-fetch results when complete
+- Display top bitstrings and portfolio metrics
+- Calculate return, risk, and Sharpe ratio
+
+**Note:** IBM Quantum queue times typically range from **15 minutes to several hours** depending on device load.
+
+---
 
 Every push and pull request to `main` triggers:
 
